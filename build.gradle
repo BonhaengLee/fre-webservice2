@@ -1,0 +1,36 @@
+// 200902 2031 그레이들 프로젝트를 스프링 부트 프로젝트로 변경, 스프링 이니셜라이저는 익숙해지면 사용, 프로젝트의 의존성 관리를 위한 설정
+buildscript {
+    ext { // build.gradle에서 사용하는 전역변수를 설정
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {// spring-boot-gradle-plugin의 2.1.7.RELEASE를 의존성으로 받겠다
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+// 앞서 선언한 플러그인 의존성을 어떻게 적용할 것인지 결정, 자바와 스프링 부트에 필수
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+/*plugins {
+    id 'java'
+}*/
+
+group 'com.jojoldu.book'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+// repos는 각 의존성 lib들을 어떤 원격 저장소에서 받을지 결정, 직접 만든 lib 업로드를 간단하게 하는 jcenter 사용
+repositories {
+    mavenCentral()
+}
+// ctrl+space로 의존성 자동완성 가능, 버전은 따로 명시하지 않아야 맨위의 버전을 따라감. 버전관리가 한 곳에 집중되어 편함
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
